@@ -1,0 +1,10 @@
+function [output] = filter_noise(input,Fs)
+N = length(input);
+T = N/Fs;
+wd = linspace(-pi,pi,N);
+f = wd*Fs/(2*pi);
+t = linspace(0,T,N);
+INPUT = fftshift(fft(input));
+filter = ((2*pi*4000)./((1j*2*pi*f) + (2*pi*4000))); % first order low pass filter
+INPUT = INPUT.*filter;
+output = real(ifft(ifftshift(INPUT)));

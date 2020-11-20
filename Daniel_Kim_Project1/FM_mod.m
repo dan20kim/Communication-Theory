@@ -1,0 +1,9 @@
+function [output] = FM_mod(input, Ac, Fc, Fs, k)
+N = length(input);
+T = N/Fs;
+L = ceil(15*Fc/Fs);
+t = linspace(0,T,N);
+tq = linspace(0, T, N*L);
+inputq = interp1(t,input,tq,'linear','extrap');
+delta = 2*pi*k*(cumsum(inputq)/(Fs*L));
+output = Ac*cos(2*pi*Fc*tq + delta);
